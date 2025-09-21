@@ -27,9 +27,9 @@ int main (int argc, char **argv){
 
 	//parse_bc(argv[1], seq);
 
-	for(uint8_t i=0;i<4;i++){
+	for(uint8_t i=1;i<4;i++){
 		instruction o = {i, 0};
-		seq[i] = o;
+		seq[i-1] = o;
 	}
 
 	VM vm = {
