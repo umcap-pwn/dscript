@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "lib/stack.h"
 #include "lib/dcore.h"
-#include "lib/misc.h"
+#include "lib/aux.h"
 #include "lib/dops.c"
 
 /* Virtual mashine for executing .dcode sequenses. */
@@ -13,9 +13,9 @@ extern int _ADD   (VM *vm);
 extern int _PRINT (VM *vm);
 extern int _RET   (VM *vm);
 
-/* Basic auxiliary function set. Decls in lib/misc.h */
+/* Basic auxiliary function set. Decls in lib/aux.h */
 extern int step     (VM *vm, int (*ops[])(VM*));
-extern int parse_bc (char* file, instruction *seq);
+extern int parse_bc (char* file, instruction *seq, int seq_len);
 //extern int exec     (VM *vm, int (*op)(VM *vm));
 
 /* Initialisation of core data structs. */
@@ -25,12 +25,8 @@ instruction seq[1024];      // placed on .bss
 
 int main (int argc, char **argv){
 
-	//parse_bc(argv[1], seq);
+	parse_bc(argv[1], seq, sizeof(seq)/sizeof(seq[1]));
 
-	for(uint8_t i=1;i<4;i++){
-		instruction o = {i, 0};
-		seq[i-1] = o;
-	}
 
 	VM vm = {
 		.sp = 0,
